@@ -1,0 +1,27 @@
+{
+  "programming languages": ["python", "java", "c++", "javascript", "ruby", "go", "rust","c#", "typescript","c"],
+  "machine learning": ["ml", "machine-learning", "machine learning", "ai", "deep learning","ML"],
+  "rest apis": ["rest api", "restful api", "apis", "drf", "rest framework(drf)", "fastapi","REST","RESTful"],
+  "data structures": ["data structures & algorithms", "dsa", "algorithms"],
+  "algorithms": ["data structures & algorithms", "dsa", "data structures"],
+  "cloud deployment": ["render", "aws", "azure", "gcp", "cloud computing"],
+  "linux": ["ubuntu", "unix", "bash", "shell"],
+  "web development": ["full stack", "frontend", "backend", "html", "css", "javascript", "react", "django", "flask"],
+  "databases": ["sql", "nosql", "mysql", "postgresql", "mongodb", "sqlite"],
+  "version control": ["git", "github", "gitlab", "bitbucket"],
+  "deep learning": ["dl","neural networks", "cnn", "rnn", "transformers", "autoencoders", "gan", "time-series","lstm"],
+  "nlp": ["natural language processing", "text processing", "sentiment analysis", "tokenization"],
+  "computer vision": ["cv", "image processing", "object detection", "image segmentation"],
+  "llm": ["large language model", "gpt", "gemini"],
+  "rag": ["retrieval augmented generation", "vector db", "faiss", "pinecone", "weaviate"],
+  "prompt engineering": [],
+  "artificial intelligence": ["artificial intelligence", "machine learning", "deep learning", "neural networks" ,"ai","nlp"],
+  "data analysis": ["data analysis", "pandas", "numpy", "matplotlib", "seaborn", "data visualization"],
+  "backend": ["django", "flask", "fastapi", "node.js", "express.js" ,"rest api"],
+  "frontend": ["react", "vue.js", "angular", "html", "css", "javascript"],
+  "devops": ["docker", "kubernetes", "ci/cd", "jenkins", "terraform"],
+  "mobile development": ["android", "ios", "react native", "flutter", "swift"],
+  "cybersecurity": ["network security", "ethical hacking", "penetration testing", "cryptography"],
+  "blockchain": ["ethereum", "smart contracts", "solidity", "decentralized applications", "dapps"]
+
+}

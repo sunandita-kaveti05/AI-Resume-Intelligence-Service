@@ -1,0 +1,12 @@
+fastapi
+uvicorn
+python-multipart
+pydantic
+pymupdf
+python-docx
+numpy
+google-generativeai
+reportlab
+python-dotenv
+sentence-transformers
+torch
