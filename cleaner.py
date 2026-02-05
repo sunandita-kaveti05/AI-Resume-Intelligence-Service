@@ -3,7 +3,7 @@ import fitz  # PyMuPDF
 import docx
 from typing import List, Optional
 from pydantic import BaseModel
-import google.generativeai as genai
+from google import genai
 
 
 
