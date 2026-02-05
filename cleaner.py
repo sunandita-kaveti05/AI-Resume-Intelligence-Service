@@ -3,7 +3,8 @@ import fitz  # PyMuPDF
 import docx
 from typing import List, Optional
 from pydantic import BaseModel
-from google import genai
+import google.generativeai as genai
+
 
 
 # ---------- 1. TEXT EXTRACTION ----------
