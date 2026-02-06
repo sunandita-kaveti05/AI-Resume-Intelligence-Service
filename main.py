@@ -17,6 +17,24 @@ from pdf_report import generate_pdf
 
 app = FastAPI()
 
+from fastapi.responses import HTMLResponse
+
+@app.get("/", response_class=HTMLResponse)
+def home():
+    return """
+    <html>
+        <head>
+            <title>Resume Analysis Service</title>
+        </head>
+        <body style="font-family: Arial; text-align: center; margin-top: 60px;">
+            <h1>Resume Analysis Microservice</h1>
+            <p>This service analyzes candidate Resume and semantically matches with JD</p>
+            <p>Use the interactive API docs to test the service.</p>
+            <a href="/docs" style="font-size:20px;">👉 Open API Documentation</a>
+        </body>
+    </html>
+    """
+
 # ---------- CORS ----------
 app.add_middleware(
     CORSMiddleware,
