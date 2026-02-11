@@ -15,6 +15,8 @@ from semantic_matcher import compute_weighted_match
 from report_generator import generate_report_dict
 from pdf_report import generate_pdf
 
+from db import resume_logs
+
 app = FastAPI()
 
 from fastapi.responses import HTMLResponse
@@ -110,12 +112,25 @@ async def analyze_resume(
     print(f"[INFO] Final Score: {scores['final_weighted_score']}")
     print(f"[INFO] PDF Generated: {pdf_url}")
 
-    # 7. Persist analysis result
-    file_name = f"{report_dict['candidate_name']}_{datetime.now().timestamp()}.json"
-    with open(ANALYSIS_DIR / file_name, "w") as f:
-        json.dump(report_dict, f, indent=2)
+    # # 7. Persist analysis result
+    # file_name = f"{report_dict['candidate_name']}_{datetime.now().timestamp()}.json"
+    # with open(ANALYSIS_DIR / file_name, "w") as f:
+    #     json.dump(report_dict, f, indent=2)
 
-    print(f"[INFO] Analysis saved: {file_name}")
+    # print(f"[INFO] Analysis saved: {file_name}")
+
+    # 7. Persist analysis result in MongoDB
+    resume_logs.insert_one({
+    "candidate_name": report_dict["candidate_name"],
+    "jd_text": jd_text,
+    "final_score": scores["final_weighted_score"],
+    "analysis_pdf": pdf_url,
+    "report": report_dict,
+    "created_at": datetime.utcnow()
+})
+
+    print("[INFO] Analysis saved to MongoDB")
+
 
     # 8. Cleanup
     os.remove(temp_path)
@@ -144,4 +159,4 @@ def get_ranking():
 # ---------- RUN ----------
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="127.0.0.1", port=8000)
