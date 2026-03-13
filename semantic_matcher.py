@@ -26,6 +26,9 @@ def avg_best_match(source_list, target_list):
     """
     if not source_list or not target_list:
         return 0.0
+    
+    source_list = [s for s in source_list if s.strip()]
+    target_list = [t for t in target_list if t.strip()]
 
     s_emb = embed(source_list)
     t_emb = embed(target_list)
@@ -42,43 +45,54 @@ def avg_best_match(source_list, target_list):
 # ---------- SEMANTIC RESUME SEGMENTS ----------
 
 def get_semantic_resume_segments(resume):
-    """
-    Returns a list of individual semantic units (bullets/descriptions)
-    to prevent signal dilution during matching.
-    """
+
     lines = []
 
-    # Experience responsibilities
+    # experience bullets
     for e in resume.get("experience", []):
         lines.extend(e.get("responsibilities", []))
 
-    # Project descriptions
+    # project titles + descriptions
     for p in resume.get("projects", []):
-        if isinstance(p, dict) and p.get("description"):
-            lines.append(p["description"])
-        elif hasattr(p, "description") and p.description:
-            lines.append(p.description)
 
-    # Skills converted to natural language sentences for better embedding context
-    for s in resume.get("raw_skills", []):
+        title = p.get("title", "")
+        desc = p.get("description", "")
+
+        if title:
+            lines.append(title)
+
+        if desc:
+            lines.append(desc)
+
+    # project tech stack evidence
+    for p in resume.get("projects", []):
+        for tech in p.get("tech_stack", []):
+            lines.append(f"Used {tech} in projects")
+
+    # normalized skill evidence
+    for s in resume.get("tech_skills", []):
         lines.append(f"Experienced with {s}")
-        
-    # Education context added to assist qualification matching
+
+    # education evidence
     for edu in resume.get("education", []):
         lines.append(f"Completed {edu.get('degree')} at {edu.get('institution')}")
 
-    return [line for line in lines if line.strip()]
-
+    return [l for l in lines if l.strip()]
 
 # ---------- SKILL MATCH (Semantic-aware) ----------
 
 def skill_score(resume, jd):
     """
-    Now performs semantic matching between the resume's tech skills 
-    and the JD's required skills.
+    Combines explicit skills with semantic resume segments
+    to detect implicit skill evidence.
     """
+
+    segments = get_semantic_resume_segments(resume)
+
+    combined_source = list(dict.fromkeys(resume["tech_skills"] + segments))
+
     return avg_best_match(
-        resume["tech_skills"],     # ontology-cleansed skills
+        combined_source,
         jd["key_skills"]
     )
 
